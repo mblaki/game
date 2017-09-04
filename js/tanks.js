@@ -250,39 +250,6 @@ Game.prototype = {
 	}
 }
 
-function Ball(id, ownerId, $arena, x, y){
-	this.id = id;
-	this.ownerId = ownerId;
-	this.$arena = $arena;
-	this.x = x;
-	this.y = y;
-
-	this.materialize();
-}
-
-Ball.prototype = {
-
-	materialize: function(){
-		this.$arena.append('<div id="' + this.id + '" class="cannon-ball" style="left:' + this.x + 'px"></div>');
-		this.$body = $('#' + this.id);
-		this.$body.css('left', this.x + 'px');
-		this.$body.css('top', this.y + 'px');
-	},
-
-	explode: function(){
-		this.$arena.append('<div id="expl' + this.id + '" class="ball-explosion" style="left:' + this.x + 'px"></div>');
-		var $expl = $('#expl' + this.id);
-		$expl.css('left', this.x + 'px');
-		$expl.css('top', this.y + 'px');
-		setTimeout( function(){
-			$expl.addClass('expand');
-		}, 1);
-		setTimeout( function(){
-			$expl.remove();
-		}, 1000);
-	}
-
-}
 
 function Tank(id, type, $arena, game, isLocal, x, y, hp){
 	this.id = id;
@@ -530,27 +497,7 @@ Tank.prototype = {
 
 	
 
-	shoot: function(){
-		if(this.dead){
-			return;
-		}
-
-		//Emit ball to server
-		var serverBall = {};
-		//Just for local balls who have owner
-		serverBall.alpha = this.cannonAngle * Math.PI / 180; //angle of shot in radians
-		//Set init position
-		var cannonLength = 60;
-		var deltaX = cannonLength * Math.sin(serverBall.alpha);
-		var deltaY = cannonLength * Math.cos(serverBall.alpha);
-
-		serverBall.ownerId = this.id;
-		serverBall.x = this.x + deltaX - 5;
-		serverBall.y = this.y - deltaY - 5;
-
-		this.game.socket.emit('shoot', serverBall);
-	}
-
+	
 }
 
 function debug(msg){
