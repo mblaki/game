@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Simulation Game</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/tanks.css">
+	<link rel="shortcut icon" href="img/icon.png">
+</head>
+<body>
+	<!--[if lt IE 7]>
+	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+	<![endif]-->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+     <script type="text/javascript" src="js/jquery.js"></script>
+
+	<div id="prompt" class="name-prompt">
+		<div class="input-group">
+	      <input id="tank-name" type="text" class="form-control" placeholder="Type Your Name" autocomplete="off">
+	      <span class="input-group-btn">
+	        <input id="join" class="btn btn-primary" type="submit" value="Join the Simulation">
+	      </span>
+	    </div>
+	</div>
+    <div id="command" class="command">
+            Command Menu
+    </div>
+	<div id="arena" class="arena">
+        
+        <button onclick="plz()" id="userListShow" >User List</button>
+        <button id="currentMapShow" >Current Map</button>
+        
+      
+        <span id="wrapper">
+	       <img id= av src="avatar.png" alt="pic not found" width="100px" height="100px">
+            
+            <img id= rd src="rudder.png" alt="pic not here" width="100px" height="100px">
+        </span>
+          <span id="butwrap">
+            <form onclick="plz()">
+                <button id="right" onclick="plz()"> right </button>
+                </form>
+                <button id="left"> left </button>
+                
+        </span>
+	</div>
+	<div id="chat" class="chat">
+        this is chat section
+        
+    </div>
+    
+	<div class = "bottomBar">
+        TOOLBAR SECTION
+    </div>    
+	<script type="text/javascript" src="js/tanks.js"></script>
+</body>
+</html>
