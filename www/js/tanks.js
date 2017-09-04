@@ -7,6 +7,7 @@ var ARENA_MARGIN = 30;
 var mx;
 var my;
 var baseAngle=0;
+
 $(document).ready(() => {
     $("#right").click(() => {
         setDiagonalRight()
@@ -54,6 +55,7 @@ function controls(){
 			setCannonAngle();
 		});
 	}
+
 function setDiagonalRight(){
 		var a = baseAngle;
 		if(a != 45 && a != 225){

@@ -1,7 +1,7 @@
 var WIDTH = "60%";
 var HEIGHT = "100vh";
 // This IP is hardcoded to my server, replace with your own
-var socket = io.connect('http://localhost:8082');
+var socket = io.connect('http://139.59.179.121:8082');
 var game = new Game('#arena', WIDTH, HEIGHT, socket);
 var selectedTank = 1;
 var tankName = '';
