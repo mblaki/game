@@ -22,35 +22,8 @@ GameServer.prototype = {
 
 	addTank: function(tank){
 		this.tanks.push(tank);
-	},
-	removeTank: function(tankId){
-		//Remove tank object
-		this.tanks = this.tanks.filter( function(t){return t.id != tankId} );
-	},
-	//Sync tank with new data received from a client
-	syncTank: function(newTankData){
-		this.tanks.forEach( function(tank){
-			if(tank.id == newTankData.id){
-				tank.x = newTankData.x;
-				tank.y = newTankData.y;
-				tank.baseAngle = newTankData.baseAngle;
-				tank.cannonAngle = newTankData.cannonAngle;
-			}
-		});
-	},
-	getData: function(){
-		var gameData = {};
-		gameData.tanks = this.tanks;
-
-		return gameData;
-	},
-
-	cleanDeadTanks: function(){
-		this.tanks = this.tanks.filter(function(t){
-			return t.hp > 0;
-		});
+        document.getElementById("command").innerHTML += "tank: " + tank.id + "\n";
 	}
-
 
 }
 
@@ -71,26 +44,7 @@ io.on('connection', function(client) {
 		game.addTank({ id: tank.id, type: tank.type, hp: TANK_INIT_HP});
 	});
 
-	client.on('sync', function(data){
-		//Receive data from clients
-		if(data.tank != undefined){
-			game.syncTank(data.tank);
-		}
-		//Broadcast data to clients
-		client.emit('sync', game.getData());
-		client.broadcast.emit('sync', game.getData());
-
-		//I do the cleanup after sending data, so the clients know
-		//when the tank dies and when the balls explode
-		game.cleanDeadTanks();
-		counter ++;
-	});
-
-	client.on('leaveGame', function(tankId){
-		console.log(tankId + ' has left the game');
-		game.removeTank(tankId);
-		client.broadcast.emit('removeTank', tankId);
-	});
+	
 
 });
 

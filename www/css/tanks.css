@@ -13,7 +13,6 @@ body{
 	background-color: #eee;
 	z-index: 2;
 	padding: 10px;
-    visibility: hidden;
 }
 #userListShow{
     margin: 10px auto auto 10px;

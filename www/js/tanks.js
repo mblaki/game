@@ -15,111 +15,6 @@ $(document).ready(() => {
     });
     });
 
-function controls(){
-		$(document).keypress( function(e){
-			var k = e.keyCode || e.which;
-			switch(k){
-				case 119: //W
-					t.dir.up = true;
-					break;
-				case 100: //D
-					t.dir.right = true;
-					break;
-				case 115: //S
-					t.dir.down = true;
-					break;
-				case 97: //A
-					t.dir.left = true;
-					break;
-			}
-
-		}).keyup( function(e){
-			var k = e.keyCode || e.which;
-			switch(k){
-				case 87: //W
-					t.dir.up = false;
-					break;
-				case 68: //D
-					t.dir.right = false;
-					break;
-				case 83: //S
-					t.dir.down = false;
-					break;
-				case 65: //A
-					t.dir.left = false;
-					break;
-			}
-		}).mousemove( function(e){ //Detect mouse for aiming
-			mx = e.pageX - $("#arena").offset().left;
-			my = e.pageY - $("#arena").offset().top;
-			setCannonAngle();
-		});
-	}
-
-function setDiagonalRight(){
-		var a = baseAngle;
-		if(a != 45 && a != 225){
-			if(a < 45 || (a > 135 && a < 225)){
-				increaseBaseRotation();
-			}else{
-				decreaseBaseRotation();
-			}
-		}
-	}
-function increaseBaseRotation(){
-		baseAngle += ROTATION_SPEED;
-		if(baseAngle >= 360){
-			baseAngle = 0;
-		}
-	}
-
-function decreaseBaseRotation(){
-		baseAngle -= ROTATION_SPEED;
-		if(baseAngle < 0){
-			baseAngle = 0;
-		}
-	}
-        
-function move(){
-		if(this.dead){
-			return;
-		}
-
-		var moveX = 0;
-		var moveY = 0;
-
-		if (this.dir.up) {
-			moveY = -1;
-		} else if (this.dir.down) {
-			moveY = 1;
-		}
-		if (this.dir.left) {
-			moveX = -1;
-		} else if (this.dir.right) {
-			moveX = 1;
-		}
-
-		moveX = this.speed * moveX;
-		moveY = this.speed * moveY;
-
-		if(this.x + moveX > (0 + ARENA_MARGIN) && (this.x + moveX) < (this.$arena.width() - ARENA_MARGIN)){
-			this.x += moveX;
-		}
-		if(this.y + moveY > (0 + ARENA_MARGIN) && (this.y + moveY) < (this.$arena.height() - ARENA_MARGIN)){
-			this.y += moveY;
-		}
-		setCannonAngle();
-		refresh();
-	}
-
-function setAngel(theAv){
-		var tank = { x: this.x , y: this.y};
-		var deltaX = this.mx - tank.x;
-		var deltaY = this.my - tank.y;
-		cannonAngle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-		cannonAngle += 90;
-	}
-
 function refresh(){
 		$("#av").css('-webkit-transform', 'rotateZ(' + baseAngle + 'deg)');
 		$("#av").css('-moz-transform', 'rotateZ(' + baseAngle + 'deg)');
@@ -159,20 +54,6 @@ Game.prototype = {
 		//remove tank from dom
 		$('#' + tankId).remove();
 		$('#info-' + tankId).remove();
-	},
-
-	killTank: function(tank){
-		tank.dead = true;
-		this.removeTank(tank.id);
-		//place explosion
-		this.$arena.append('<img id="expl' + tank.id + '" class="explosion" src="./img/explosion.gif">');
-		$('#expl' + tank.id).css('left', (tank.x - 50)  + 'px');
-		$('#expl' + tank.id).css('top', (tank.y - 100)  + 'px');
-
-		setTimeout(function(){
-			$('#expl' + tank.id).remove();
-		}, 1000);
-
 	},
 
 	mainLoop: function(){
@@ -238,17 +119,6 @@ Game.prototype = {
 				game.addTank(serverTank.id, serverTank.type, false, serverTank.x, serverTank.y, serverTank.hp);
 			}
 		});
-
-		//Render balls
-		game.$arena.find('.cannon-ball').remove();
-
-		serverData.balls.forEach( function(serverBall){
-			var b = new Ball(serverBall.id, serverBall.ownerId, game.$arena, serverBall.x, serverBall.y);
-			b.exploding = serverBall.exploding;
-			if(b.exploding){
-				b.explode();
-			}
-		});
 	}
 }
 
@@ -266,8 +136,6 @@ function Tank(id, type, $arena, game, isLocal, x, y, hp){
 	this.cannonAngle = 0;
 	this.x = x;
 	this.y = y;
-	this.mx = null;
-	this.my = null;
 	this.dir = {
 		up: false,
 		down: false,
