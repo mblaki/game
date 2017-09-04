@@ -40,7 +40,7 @@ io.on('connection', function(client) {
 		var initY = getRandomInt(40, 500);
 		client.emit('addTank', { id: tank.id, type: tank.type, isLocal: true, x: initX, y: initY, hp: TANK_INIT_HP });
 		client.broadcast.emit('addTank', { id: tank.id, type: tank.type, isLocal: false, x: initX, y: initY, hp: TANK_INIT_HP} );
-
+        document.getElementById("command2").innerHTML += "tank: " + tank.id + "\n";
 		game.addTank({ id: tank.id, type: tank.type, hp: TANK_INIT_HP});
 	});
 

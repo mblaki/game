@@ -50,8 +50,8 @@ $(window).on('beforeunload', function(){
 });
 
 function joinGame(tankName, tankType, socket){
-	if(tankName != ''){
+	
 		$('#prompt').hide();
 		socket.emit('joinGame', {id: tankName, type: tankType});
-	}
+	
 }
